@@ -82,13 +82,115 @@ public class Screenshot : MonoBehaviour
 
             Camera cam = this.GetComponent<Camera>();
             Vector3 screenPoint = cam.WorldToScreenPoint(go.transform.position);
+            if(screenPoint.z <= 0)
+            {
+                GetComponent<CameraSetting>().Rotate();
+                return;
+            }
 
             int topPos = (int) screenPoint.y;
             int bottomPos = (int)screenPoint.y;
             int leftPos = (int)screenPoint.x;
             int rightPos = (int)screenPoint.x;
             //int layer_mask = LayerMask.GetMask("bottle");
-            int layer_mask = 1 << 8;
+            //int layer_mask = 1 << 8;
+            //List<Vector2> set = new List<Vector2>();
+            List<int> topList = new List<int>();
+            List<int> bottomList = new List<int>();
+            List<int> rightList = new List<int>();
+            List<int> leftList = new List<int>();
+
+            foreach(Renderer r in go.GetComponentsInChildren<Renderer>())
+            {
+                topList.Add((int)cam.WorldToScreenPoint(r.bounds.max).y);
+                bottomList.Add((int)cam.WorldToScreenPoint(r.bounds.min).y);
+                rightList.Add((int)cam.WorldToScreenPoint(r.bounds.max).x);
+                leftList.Add((int)cam.WorldToScreenPoint(r.bounds.min).x);
+            }
+
+            topPos = Mathf.Max(topList.ToArray());
+            bottomPos = Mathf.Min(bottomList.ToArray());
+            rightPos = Mathf.Max(rightList.ToArray());
+            leftPos = Mathf.Min(leftList.ToArray());
+
+
+            /*
+            topPos = (int)cam.WorldToScreenPoint(go.GetComponent<Renderer>().bounds.max).y;
+            bottomPos = (int)cam.WorldToScreenPoint(go.GetComponent<Renderer>().bounds.min).y;
+            rightPos = (int)cam.WorldToScreenPoint(go.GetComponent<Renderer>().bounds.max).x;
+            leftPos = (int)cam.WorldToScreenPoint(go.GetComponent<Renderer>().bounds.min).x;
+            */
+            
+            /*
+            for (int x = (int)screenPoint.x; x <= cam.pixelWidth; x++)
+            {
+                for (int y = (int)screenPoint.y; y <= cam.pixelHeight; y++)
+                {
+                    Ray ray = Camera.main.ScreenPointToRay(new Vector3(x, y, 0));
+                    RaycastHit hit;
+                    if (Physics.Raycast(ray, out hit, 100000, layer_mask))
+                    {
+                        Debug.Log("hit" + hit.ToString());
+                        set.Add(new Vector2(x, y));
+                        break;
+                    }
+                }
+                for (int y = (int)screenPoint.y; y >= 0; y--)
+                {
+                    Ray ray = Camera.main.ScreenPointToRay(new Vector3(x, y, 0));
+                    RaycastHit hit;
+                    if (Physics.Raycast(ray, out hit, 100000, layer_mask))
+                    {
+                        Debug.Log("hit" + hit.ToString());
+                        set.Add(new Vector2(x, y));
+                        break;
+                    }
+                }
+            }
+
+            for (int x = (int)screenPoint.x; x >= 0; x--)
+            {
+                for (int y = (int)screenPoint.y; y <= cam.pixelHeight; y++)
+                {
+                    Ray ray = Camera.main.ScreenPointToRay(new Vector3(x, y, 0));
+                    RaycastHit hit;
+                    if (Physics.Raycast(ray, out hit, 100000, layer_mask))
+                    {
+                        Debug.Log("hit" + hit.ToString());
+                        set.Add(new Vector2(x, y));
+                        break;
+                    }
+                }
+                for (int y = (int)screenPoint.y; y >= 0; y--)
+                {
+                    Ray ray = Camera.main.ScreenPointToRay(new Vector3(x, y, 0));
+                    RaycastHit hit;
+                    if (Physics.Raycast(ray, out hit, 100000, layer_mask))
+                    {
+                        Debug.Log("hit" + hit.ToString());
+                        set.Add(new Vector2(x, y));
+                        break;
+                    }
+                }
+            }
+
+            if (set.Count > 0) {
+                topPos = (int)set[0].y;
+                bottomPos = (int)set[0].y;
+                rightPos = (int)set[0].x;
+                leftPos = (int)set[0].x;
+            }
+            else if (set.Count > 1) {
+                for (int inc = 1; inc < set.Count; inc++)
+                {
+                    topPos = (int) Mathf.Max(set[inc].y,topPos);
+                    bottomPos = (int)Mathf.Min(set[inc].y, bottomPos);
+                    rightPos = (int)Mathf.Max(set[inc].x, rightPos);
+                    leftPos = (int)Mathf.Min(set[inc].x, leftPos);
+                }
+            }
+            */
+            /*
             //check top boundary
             for (var top = (int) screenPoint.y + 1; top <= cam.pixelHeight; top++)
             {     
@@ -148,11 +250,12 @@ public class Screenshot : MonoBehaviour
                 if (left == cam.pixelHeight)
                     leftPos = cam.pixelWidth;
             }
+            */
 
             if ((new Rect(0, 0, Screen.width, Screen.height)).Contains(screenPoint) && screenPoint.z > 0){
 
                 //posText.Add(screenPoint.x + ";" + screenPoint.y + ";" + screenPoint.z);
-                posText.Add(topPos + ";" + bottomPos + ";" + rightPos + ";" + leftPos);
+                posText.Add(topPos + ";" + bottomPos + ";" + rightPos + ";" + leftPos);;
             }
             
             
