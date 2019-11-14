@@ -49,6 +49,8 @@ public class Screenshot : MonoBehaviour
 
 	}
     string pathFinal = string.Empty;
+    
+
     public void ScreenCaptureFunction()
     {
 
@@ -74,13 +76,83 @@ public class Screenshot : MonoBehaviour
                 GetComponent<CameraSetting>().Rotate();
                 return;
             }
-           // Debug.Log("IsVisible");
+            // Debug.Log("IsVisible");
+
             
+
             Camera cam = this.GetComponent<Camera>();
             Vector3 screenPoint = cam.WorldToScreenPoint(go.transform.position);
+
+            int topPos = (int) screenPoint.y;
+            int bottomPos = (int)screenPoint.y;
+            int leftPos = (int)screenPoint.x;
+            int rightPos = (int)screenPoint.x;
+            //int layer_mask = LayerMask.GetMask("bottle");
+            int layer_mask = 1 << 8;
+            //check top boundary
+            for (var top = (int) screenPoint.y + 1; top <= cam.pixelHeight; top++)
+            {     
+                Ray ray = Camera.main.ScreenPointToRay(new Vector3(screenPoint.x,top,0));
+                RaycastHit hit;
+                if (!Physics.Raycast(ray, out hit, 100000, layer_mask))
+                {
+                    Debug.Log("hit" + hit.ToString());
+                    topPos = top;
+                    break;
+                }
+                if (top == cam.pixelHeight)
+                {
+                    Debug.Log("hit" + hit.ToString());
+                    topPos = cam.pixelHeight;
+                }
+            }
+
+            //check bottom boundary
+            for (var bottom = (int)screenPoint.y - 1; bottom >= 0; bottom--)
+            {
+                Ray ray = Camera.main.ScreenPointToRay(new Vector3(screenPoint.x, bottom, 0));
+                RaycastHit hit;
+                if (!Physics.Raycast(ray, out hit, 100000, layer_mask))
+                {
+                    bottomPos = bottom;
+                    break;
+                }
+                if (bottom == 0)
+                    bottomPos = 0;
+            }
+
+            //Check Right Boundary
+            for (var right = (int)screenPoint.x + 1; right <= cam.pixelWidth; right++)
+            {
+                Ray ray = Camera.main.ScreenPointToRay(new Vector3(screenPoint.x, right, 0));
+                RaycastHit hit;
+                if (!Physics.Raycast(ray, out hit, 100000, layer_mask))
+                {
+                    rightPos = right;
+                    break;
+                }
+                if (right == cam.pixelHeight)
+                    rightPos = cam.pixelWidth;
+            }
+
+            //Check Left Boundary
+            for (var left = (int)screenPoint.x - 1; left>= 0; left--)
+            {
+                Ray ray = Camera.main.ScreenPointToRay(new Vector3(screenPoint.x, left, 0));
+                RaycastHit hit;
+                if (!Physics.Raycast(ray, out hit, 100000, layer_mask))
+                {
+                    leftPos = left;
+                    break;
+                }
+                if (left == cam.pixelHeight)
+                    leftPos = cam.pixelWidth;
+            }
+
             if ((new Rect(0, 0, Screen.width, Screen.height)).Contains(screenPoint) && screenPoint.z > 0){
-                
-                posText.Add(screenPoint.x + ";" + screenPoint.y + ";" + screenPoint.z);
+
+                //posText.Add(screenPoint.x + ";" + screenPoint.y + ";" + screenPoint.z);
+                posText.Add(topPos + ";" + bottomPos + ";" + rightPos + ";" + leftPos);
             }
             
             
@@ -122,6 +194,7 @@ public class Screenshot : MonoBehaviour
             {
                 using (StreamWriter sw = File.CreateText(path + objPositionFileName))
                 {
+                    sw.WriteLine("image_location;top_pos;bottom_pos;right_pos;left_pos");
                     sw.WriteLine(pathFinal + ";" + p);
                 }
             } 
