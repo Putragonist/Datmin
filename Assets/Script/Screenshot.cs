@@ -51,8 +51,7 @@ public class Screenshot : MonoBehaviour
     string pathFinal = string.Empty;
     public void ScreenCaptureFunction()
     {
-<<<<<<< Updated upstream
-=======
+
        // bool isEmpty = true;
         List<string> posText = new List<string>();
         foreach (GameObject go in goList.spawnGameObject)
@@ -79,7 +78,7 @@ public class Screenshot : MonoBehaviour
             
             Camera cam = this.GetComponent<Camera>();
             Vector3 screenPoint = cam.WorldToScreenPoint(go.transform.position);
-            if ((new Rect(0, 0, Screen.width, Screen.height)).Contains(screenPoint)){
+            if ((new Rect(0, 0, Screen.width, Screen.height)).Contains(screenPoint) && screenPoint.z > 0){
                 
                 posText.Add(screenPoint.x + ";" + screenPoint.y + ";" + screenPoint.z);
             }
@@ -93,7 +92,6 @@ public class Screenshot : MonoBehaviour
             return;
         }
 
->>>>>>> Stashed changes
         string path = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures) + "/" + FolderName + "/";
         if (!Directory.Exists(path))
             Directory.CreateDirectory(path);
@@ -107,9 +105,9 @@ public class Screenshot : MonoBehaviour
         }
 
         while (File.Exists(pathFinal));
-<<<<<<< Updated upstream
+
         ScreenCapture.CaptureScreenshot(pathFinal);
-=======
+
 
 
         //string path2 = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures) + "/" + FolderName + "Point/";
@@ -140,7 +138,7 @@ public class Screenshot : MonoBehaviour
         takingScreenshot = true;
 
         
->>>>>>> Stashed changes
+
     }
     /*
     // The folder to contain our screenshots.
