@@ -27,7 +27,9 @@ public class CameraSetting : MonoBehaviour
         if (Time.time - lastTime > timeCapture)
         {
             Application.Quit();
+#if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
+#endif
             return;
         }
 

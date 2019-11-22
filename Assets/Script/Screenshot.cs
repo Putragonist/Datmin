@@ -32,6 +32,10 @@ public class Screenshot : MonoBehaviour
             } else
             {
                 takingScreenshot = false;
+
+                //int screenX = UnityEngine.Random.Range(480, 1921);
+              //  int screenY = UnityEngine.Random.Range(480, 1921);
+                //Screen.SetResolution(screenX, screenY, false);
                 GetComponent<CameraSetting>().Rotate();
             }
         }
@@ -52,8 +56,7 @@ public class Screenshot : MonoBehaviour
 
     public void ScreenCaptureFunction()
     {
-
-
+        
         List<string> posText = new List<string>();
 
         foreach (GameObject go in goList.spawnGameObject)
@@ -82,6 +85,7 @@ public class Screenshot : MonoBehaviour
             
 
             Camera cam = this.GetComponent<Camera>();
+            
             Vector3 screenPoint = cam.WorldToScreenPoint(go.transform.position);
 
             //make sure object is in front of camera
@@ -119,9 +123,10 @@ public class Screenshot : MonoBehaviour
             leftPos = Mathf.Min(leftList.ToArray());
 
             //Post it in dataset
-            if ((new Rect(0, 0, Screen.width, Screen.height)).Contains(screenPoint) && screenPoint.z > 0){
+            if ((new Rect(0, 0, Screen.width, Screen.height)).Contains(screenPoint) && screenPoint.x > 0 && screenPoint.y > 0 && screenPoint.z > 0){
 
-                posText.Add(topPos + ";" + bottomPos + ";" + rightPos + ";" + leftPos);;
+                //posText.Add(topPos + ";" + bottomPos + ";" + rightPos + ";" + leftPos);;
+                posText.Add(leftPos + ";" + (Screen.height - topPos) + ";" + rightPos + ";" + (Screen.height - bottomPos)); ;
             }
             
             
@@ -160,7 +165,7 @@ public class Screenshot : MonoBehaviour
             {
                 using (StreamWriter sw = File.CreateText(path + objPositionFileName))
                 {
-                    sw.WriteLine("image_location;top_pos;bottom_pos;right_pos;left_pos");
+                    sw.WriteLine("image_location;left;top;right;bottom");
                     sw.WriteLine(pathFinal + ";" + p);
                 }
             } 
