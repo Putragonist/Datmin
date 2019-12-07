@@ -8,7 +8,7 @@ public class CameraSetting : MonoBehaviour
     public GameObject point;
     public float minRadius = 5;
     public float maxRadius = 25;
-    int radius = 0;
+    float radius = 0;
     int iteration = 0;
     public float timeCapture = 360;
     float lastTime = 0;
@@ -16,8 +16,8 @@ public class CameraSetting : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        float minRadius = this.minRadius;
-        float radius = minRadius;
+        //minRadius = this.minRadius;
+        radius = minRadius;
         lastTime = Time.time;
     }
 
@@ -43,8 +43,7 @@ public class CameraSetting : MonoBehaviour
     {
         if (radius >= maxRadius)
         {
-            radius = 0;
-
+            radius = minRadius;
         }
 
         float x = Random.Range((float)-radius / 2, (float)radius / 2);
@@ -60,5 +59,10 @@ public class CameraSetting : MonoBehaviour
             iteration = 0;
             radius++;
         }
+    }
+
+    public void OnCollisionEnter(Collision collision)
+    {
+        collision.transform.gameObject.SetActive(false);
     }
 }

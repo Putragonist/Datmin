@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 33919018324767234}
   - component: {fileID: 23547353901872224}
   - component: {fileID: 95691109808284178}
+  - component: {fileID: -2312718218472447561}
   m_Layer: 8
   m_Name: waterbottle
   m_TagString: Bottle
@@ -99,3 +100,17 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!64 &-2312718218472447561
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1216505430168376}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 1
+  m_CookingOptions: 14
+  m_Mesh: {fileID: 4300000, guid: 3f98ed3816ff31648a910c62376dc52d, type: 3}

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GameObjectList : MonoBehaviour
 {
+    public CameraSetting cs;
     public List<GameObject> bottleTypes1;
 
     public List<GameObject> otherTypes;
@@ -60,6 +61,7 @@ public class GameObjectList : MonoBehaviour
             int oval = Random.Range(0, 2);
             GameObject go = go = Instantiate(bottleTypes1[Random.Range(0, bottleTypes1.Count)]);
 
+
             float posX = Random.Range(-radiusMax / 2, radiusMax / 2);
             float posY = Random.Range(5 , 10);
             float posZ = Random.Range(-radiusMax / 2, radiusMax / 2);
@@ -67,6 +69,9 @@ public class GameObjectList : MonoBehaviour
             
             spawnGameObject.Add(go);
         }
+
+        if(spawnGameObject.Count > 0)
+            cs.point = spawnGameObject[Random.Range(0, spawnGameObject.Count)];
 
         for(int i = 0; i < Random.Range(randomMinObjectType, randomMaxObjectType); i++)
         {

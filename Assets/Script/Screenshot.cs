@@ -6,6 +6,7 @@ using System;
 
 public class Screenshot : MonoBehaviour
 {
+    public CameraSetting cs;
     public GameObjectList goList;
     public string FolderName = "ScreenShot Folder SOA";
     public string FileName = "Screenshot";
@@ -56,7 +57,8 @@ public class Screenshot : MonoBehaviour
 
     public void ScreenCaptureFunction()
     {
-        
+        if (GetComponent<CameraSetting>().point == null)
+            return;
         List<string> posText = new List<string>();
 
         foreach (GameObject go in goList.spawnGameObject)
@@ -121,12 +123,49 @@ public class Screenshot : MonoBehaviour
             bottomPos = Mathf.Min(bottomList.ToArray());
             rightPos = Mathf.Max(rightList.ToArray());
             leftPos = Mathf.Min(leftList.ToArray());
+            float temph = (Screen.height - topPos);
+            float tempw = (Screen.height - bottomPos);
+
+            //float tempr = (Screen.width - rightPos);
+            //float templ = (Screen.width - leftPos);
+
+
+            float rl = Mathf.Max(rightPos, leftPos);
+            float lf = Mathf.Min(leftPos, rightPos);
+            float hi = Mathf.Min(temph, tempw);
+            float bo = Mathf.Max(tempw, temph);
 
             //Post it in dataset
             if ((new Rect(0, 0, Screen.width, Screen.height)).Contains(screenPoint) && screenPoint.x > 0 && screenPoint.y > 0 && screenPoint.z > 0){
 
-                //posText.Add(topPos + ";" + bottomPos + ";" + rightPos + ";" + leftPos);;
-                posText.Add(leftPos + ";" + (Screen.height - topPos) + ";" + rightPos + ";" + (Screen.height - bottomPos)); ;
+                if (hi > 0 && lf > 0 && rl > 0 && bo > 0 &&
+                    hi >= 0 && bo <= Screen.height && lf >= 0 && rl <= Screen.width &&
+                    (rl-lf > 100 || bo - hi > 100)
+                    )
+                {
+                    List<Vector2> bv = new List<Vector2>();
+                    bv.Add(new Vector2(lf + (rl - lf) / 2, Screen.height - hi + (bo - hi) / 2));
+                    bv.Add(new Vector2(rl - (rl - lf) / 4, Screen.height - bo - (bo - hi) / 4));
+                    bv.Add(new Vector2(lf + (rl - lf) / 4, Screen.height - hi + (bo - hi) / 4));
+
+                    foreach (Vector2 v in bv)
+                    {
+                        RaycastHit hit;
+                        Ray ray = GetComponent<Camera>().ScreenPointToRay(v);
+
+                        if (Physics.Raycast(ray, out hit))
+                        {
+                            if (hit.transform.gameObject.tag.ToLower() != "bottle" &&
+                                hit.transform.gameObject.tag.ToLower() != "maincamera" &&
+                                hit.transform.gameObject.tag.ToLower() != "ground")
+                            {
+                                hit.transform.gameObject.SetActive(false);
+                            }
+                        }
+                    }
+
+                    posText.Add(lf + ";" + hi + ";" + rl + ";" + bo);
+                }
             }
             
             
@@ -147,7 +186,8 @@ public class Screenshot : MonoBehaviour
         //Change filename
         do
         {
-            i++;
+            //i++;
+            i = UnityEngine.Random.Range(0, 9999);
             pathFinal = path + FileName+ (i < 10 ? "000" : i < 100 ? "00" : i < 1000 ? "0" : "") + i + ".png";
         }
 

@@ -153,6 +153,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6834130a73dcaa4c833369c6f3d8d60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cs: {fileID: 0}
   goList: {fileID: 0}
   FolderName: BottleScreenshot
   FileName: Black and White
@@ -388,6 +389,7 @@ GameObject:
   - component: {fileID: 963194226}
   - component: {fileID: 963194229}
   - component: {fileID: 963194230}
+  - component: {fileID: 963194231}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -474,7 +476,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   point: {fileID: 1824822716}
   minRadius: 5
-  maxRadius: 25
+  maxRadius: 7
   timeCapture: 300
   isManualRotation: 1
 --- !u!114 &963194230
@@ -489,12 +491,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6834130a73dcaa4c833369c6f3d8d60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cs: {fileID: 0}
   goList: {fileID: 2113122283}
   FolderName: BottleScreenshotTest
   FileName: Screenshot
   frameRate: 24
   isAlwaysCapture: 1
   objPositionFileName: ObjectPosition.txt
+--- !u!65 &963194231
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1371328237
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -696,6 +712,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6834130a73dcaa4c833369c6f3d8d60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cs: {fileID: 0}
   goList: {fileID: 0}
   FolderName: BottleScreenshot
   FileName: Tresholding
@@ -997,12 +1014,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9016e2c5b664e749a32a9c0646c80a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cs: {fileID: 963194229}
   bottleTypes1:
   - {fileID: 4266455471314865930, guid: 038c4db0cb6ea154eb43dbfd3c60a48f, type: 3}
   - {fileID: 3806058660615856231, guid: 652b8d9dcf5fc8040ad135323acff8b1, type: 3}
   - {fileID: 1731937013772950327, guid: 6a899fd9d7a37994f8f16bd76b886a48, type: 3}
   - {fileID: 1357603830413419195, guid: 005a631fa90a65f45acbfbfbb70a24f2, type: 3}
-  - {fileID: 1216505430168376, guid: 57e3542e6c16dfd40972c0b1b0899afb, type: 3}
   otherTypes:
   - {fileID: 184454, guid: ac1af96fd5e0f4f9e97339b652aa389b, type: 3}
   - {fileID: 139516, guid: 4246925f0393c430189bb4ceba36dc8a, type: 3}
@@ -1021,8 +1038,8 @@ MonoBehaviour:
   - {fileID: 1124578452033744, guid: 38fb7ded0e1057f438e082c5f655bd53, type: 3}
   - {fileID: 1985338178271116, guid: 48ec186542777474bb236dff1694340c, type: 3}
   - {fileID: 1089726810798314, guid: f2eb86ba579ab5c4db54a92a8f0c3b7b, type: 3}
-  - {fileID: 1657099503377425822, guid: 9583b5a56aa96c44ea4324f158d55cf3, type: 3}
-  - {fileID: 4218833965154570715, guid: 35bcd53a0a076384eb61f4fde6a980ce, type: 3}
+  - {fileID: 1000012968262300, guid: 30b99e7dc1382e346a7f9789de00de5e, type: 3}
+  - {fileID: 1000011143488790, guid: a649302f8407dd9469e2c5b67b4a0674, type: 3}
   - {fileID: 5732260040435327840, guid: 3e59772c3c54ea04ca61d4ec1113223d, type: 3}
   - {fileID: 4960228137291672676, guid: a5aede4a95225ee44ac44fe3c3bc86bd, type: 3}
   - {fileID: 9115802746607048468, guid: bfc45b63afbcb1f4abcf091d36f5d97a, type: 3}
@@ -1040,8 +1057,8 @@ MonoBehaviour:
   point: {fileID: 0}
   randomCountMin: 1
   randomCountMax: 5
-  randomMinObjectType: 10
-  randomMaxObjectType: 145
+  randomMinObjectType: 100
+  randomMaxObjectType: 1000
   radiusMax: 25
   timeSpawn: 3
 --- !u!4 &2113122284
@@ -1073,7 +1090,7 @@ GameObject:
   - component: {fileID: 2113265411}
   m_Layer: 0
   m_Name: Plane
-  m_TagString: Untagged
+  m_TagString: ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1172,3 +1189,8 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 66ff5a0823de03344b28d1594b297018, type: 3}
   - {fileID: 2800000, guid: 9b47d01427ff5db4885c6f7dcc13e84e, type: 3}
   - {fileID: 2800000, guid: 471a342eff0892841b70e8c225614e27, type: 3}
+  - {fileID: 2800000, guid: 4d1a5660d551b974e898834d6591ae20, type: 3}
+  - {fileID: 2800000, guid: d04c6e9b303664d4397051a277ec98c0, type: 3}
+  - {fileID: 2800000, guid: 3cdfb8364ec1cc247872899114d66d64, type: 3}
+  - {fileID: 2800000, guid: 5e97384819cd5494785f9915ee5588d3, type: 3}
+  - {fileID: 2800000, guid: 760a11c20be848e4fbe0d85068ae1638, type: 3}

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 23692305094115228}
   - component: {fileID: 95161500554173096}
   - component: {fileID: 2936522271851484350}
+  - component: {fileID: -7303603042824608802}
   m_Layer: 0
   m_Name: firstaid
   m_TagString: Untagged
@@ -115,3 +116,17 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!64 &-7303603042824608802
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1987713744733760}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 1
+  m_CookingOptions: 14
+  m_Mesh: {fileID: 4300000, guid: 334a15b23e6d31f44bef4858676d704a, type: 3}
