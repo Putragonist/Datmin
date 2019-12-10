@@ -112,12 +112,12 @@ public class Screenshot : MonoBehaviour
             //Get every bound of object
             foreach(Renderer r in go.GetComponentsInChildren<Renderer>())
             {
-<<<<<<< Updated upstream
-                topList.Add((int)cam.WorldToScreenPoint(r.bounds.max).y);
-                bottomList.Add((int)cam.WorldToScreenPoint(r.bounds.min).y);
-                rightList.Add((int)cam.WorldToScreenPoint(r.bounds.max).x);
-                leftList.Add((int)cam.WorldToScreenPoint(r.bounds.min).x);
-=======
+//<<<<<<< Updated upstream
+//                topList.Add((int)cam.WorldToScreenPoint(r.bounds.max).y);
+//                bottomList.Add((int)cam.WorldToScreenPoint(r.bounds.min).y);
+//                rightList.Add((int)cam.WorldToScreenPoint(r.bounds.max).x);
+//                leftList.Add((int)cam.WorldToScreenPoint(r.bounds.min).x);
+//=======
 
                 Mesh m = r.GetComponent<MeshFilter>().mesh;
                
@@ -175,7 +175,7 @@ public class Screenshot : MonoBehaviour
                 //bottomList.Add((int)(min).y);
                 //rightList.Add((int)(max).x);
                 //leftList.Add((int)(min).x);
->>>>>>> Stashed changes
+//>>>>>>> Stashed changes
             }
 
             //update position value
