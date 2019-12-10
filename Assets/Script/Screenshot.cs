@@ -112,10 +112,70 @@ public class Screenshot : MonoBehaviour
             //Get every bound of object
             foreach(Renderer r in go.GetComponentsInChildren<Renderer>())
             {
+<<<<<<< Updated upstream
                 topList.Add((int)cam.WorldToScreenPoint(r.bounds.max).y);
                 bottomList.Add((int)cam.WorldToScreenPoint(r.bounds.min).y);
                 rightList.Add((int)cam.WorldToScreenPoint(r.bounds.max).x);
                 leftList.Add((int)cam.WorldToScreenPoint(r.bounds.min).x);
+=======
+
+                Mesh m = r.GetComponent<MeshFilter>().mesh;
+               
+                int vc = m.vertices.Length;
+                //Bounds bounds = new Bounds();
+                for(int v = 0; v < vc; v++)
+                {
+                    //if (v == 0)
+                    //{
+                    //    bounds = new Bounds(r.gameObject.transform.transformpoint(m.vertices[v]), vector3.zero);
+                    //}
+                    //else
+                    //{
+                    //    bounds.Encapsulate(r.transform.TransformPoint(m.vertices[v]));
+                    //}
+
+                    Bounds bounds = new Bounds(r.gameObject.transform.TransformPoint(m.vertices[v]), Vector3.zero);
+                    Vector3 meshLock = r.gameObject.transform.TransformPoint(m.vertices[v]);
+                    topList.Add((int)cam.WorldToScreenPoint(bounds.max).y);
+                    bottomList.Add((int)cam.WorldToScreenPoint(bounds.min).y);
+                    rightList.Add((int)cam.WorldToScreenPoint(bounds.max).x);
+                    leftList.Add((int)cam.WorldToScreenPoint(bounds.min).x);
+                }
+
+                //for (int l = 0; l < bounds.; l++)
+                //{
+                //    topList.Add((int)cam.WorldToScreenPoint(bounds.max).y);
+                //    bottomList.Add((int)cam.WorldToScreenPoint(bounds.min).y);
+                //    rightList.Add((int)cam.WorldToScreenPoint(bounds.max).x);
+                //    leftList.Add((int)cam.WorldToScreenPoint(bounds.min).x);
+                //}
+
+                //Vector3 cen = r.bounds.center;
+                //Vector3 ext = r.bounds.extents;
+                //Vector2[] extentPoints = new Vector2[8]
+                //{
+                //    HandleUtility.WorldToGUIPoint(new Vector3(cen.x-ext.x, cen.y-ext.y, cen.z-ext.z)),
+                //    HandleUtility.WorldToGUIPoint(new Vector3(cen.x+ext.x, cen.y-ext.y, cen.z-ext.z)),
+                //    HandleUtility.WorldToGUIPoint(new Vector3(cen.x-ext.x, cen.y-ext.y, cen.z+ext.z)),
+                //    HandleUtility.WorldToGUIPoint(new Vector3(cen.x+ext.x, cen.y-ext.y, cen.z+ext.z)),
+                //    HandleUtility.WorldToGUIPoint(new Vector3(cen.x-ext.x, cen.y+ext.y, cen.z-ext.z)),
+                //    HandleUtility.WorldToGUIPoint(new Vector3(cen.x+ext.x, cen.y+ext.y, cen.z-ext.z)),
+                //    HandleUtility.WorldToGUIPoint(new Vector3(cen.x-ext.x, cen.y+ext.y, cen.z+ext.z)),
+                //    HandleUtility.WorldToGUIPoint(new Vector3(cen.x+ext.x, cen.y+ext.y, cen.z+ext.z))
+                //};
+                //Vector2 min = extentPoints[0];
+                //Vector2 max = extentPoints[0];
+                //foreach (Vector2 v in extentPoints)
+                //{
+                //    min = Vector2.Min(min, v);
+                //    max = Vector2.Max(max, v);
+                //}
+
+                //topList.Add((int)max.y);
+                //bottomList.Add((int)(min).y);
+                //rightList.Add((int)(max).x);
+                //leftList.Add((int)(min).x);
+>>>>>>> Stashed changes
             }
 
             //update position value
