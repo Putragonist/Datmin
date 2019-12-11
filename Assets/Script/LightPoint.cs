@@ -10,7 +10,7 @@ public class LightPoint : MonoBehaviour
     {
         light = GetComponent<UnityEngine.Light>();
         GetComponent<UnityEngine.Light>().intensity = Random.Range(0, 1);
-       // GetComponent<UnityEngine.Light>().areaSize = new Vector2(Random.Range(1, 20), Random.Range(1, 20));
+        GetComponent<UnityEngine.Light>().areaSize = new Vector2(Random.Range(1, 20), Random.Range(1, 20));
     }
 
     // Update is called once per frame
