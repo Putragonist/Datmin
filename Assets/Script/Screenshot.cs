@@ -98,118 +98,65 @@ public class Screenshot : MonoBehaviour
             }
 
             //Set default value (middle point of object
-            int topPos = (int) screenPoint.y;
-            int bottomPos = (int)screenPoint.y;
-            int leftPos = (int)screenPoint.x;
-            int rightPos = (int)screenPoint.x;
+            int max_y = (int) screenPoint.y;
+            int min_y = (int)screenPoint.y;
+            int min_x = (int)screenPoint.x;
+            int max_x = (int)screenPoint.x;
 
             //List for getting max and min value
-            List<int> topList = new List<int>();
-            List<int> bottomList = new List<int>();
-            List<int> rightList = new List<int>();
-            List<int> leftList = new List<int>();
+            List<int> ys_max = new List<int>();
+            List<int> ys_min = new List<int>();
+            List<int> xs_max = new List<int>();
+            List<int> xs_min = new List<int>();
 
             //Get every bound of object
             foreach(Renderer r in go.GetComponentsInChildren<Renderer>())
             {
-//<<<<<<< Updated upstream
-//                topList.Add((int)cam.WorldToScreenPoint(r.bounds.max).y);
-//                bottomList.Add((int)cam.WorldToScreenPoint(r.bounds.min).y);
-//                rightList.Add((int)cam.WorldToScreenPoint(r.bounds.max).x);
-//                leftList.Add((int)cam.WorldToScreenPoint(r.bounds.min).x);
-//=======
-
-                Mesh m = r.GetComponent<MeshFilter>().mesh;
-               
-                int vc = m.vertices.Length;
-                //Bounds bounds = new Bounds();
+                Mesh m = r.GetComponent<MeshFilter>().mesh;  //Dapatkan mesh objek             
+                int vc = m.vertices.Length; //jumlah vertex pada objek
                 for(int v = 0; v < vc; v++)
                 {
-                    //if (v == 0)
-                    //{
-                    //    bounds = new Bounds(r.gameObject.transform.transformpoint(m.vertices[v]), vector3.zero);
-                    //}
-                    //else
-                    //{
-                    //    bounds.Encapsulate(r.transform.TransformPoint(m.vertices[v]));
-                    //}
-
                     Bounds bounds = new Bounds(r.gameObject.transform.TransformPoint(m.vertices[v]), Vector3.zero);
                     Vector3 meshLock = r.gameObject.transform.TransformPoint(m.vertices[v]);
-                    topList.Add((int)cam.WorldToScreenPoint(bounds.max).y);
-                    bottomList.Add((int)cam.WorldToScreenPoint(bounds.min).y);
-                    rightList.Add((int)cam.WorldToScreenPoint(bounds.max).x);
-                    leftList.Add((int)cam.WorldToScreenPoint(bounds.min).x);
+                    ys_max.Add((int)cam.WorldToScreenPoint(bounds.max).y);
+                    ys_min.Add((int)cam.WorldToScreenPoint(bounds.min).y);
+                    xs_max.Add((int)cam.WorldToScreenPoint(bounds.max).x);
+                    xs_min.Add((int)cam.WorldToScreenPoint(bounds.min).x);
                 }
-
-                //for (int l = 0; l < bounds.; l++)
-                //{
-                //    topList.Add((int)cam.WorldToScreenPoint(bounds.max).y);
-                //    bottomList.Add((int)cam.WorldToScreenPoint(bounds.min).y);
-                //    rightList.Add((int)cam.WorldToScreenPoint(bounds.max).x);
-                //    leftList.Add((int)cam.WorldToScreenPoint(bounds.min).x);
-                //}
-
-                //Vector3 cen = r.bounds.center;
-                //Vector3 ext = r.bounds.extents;
-                //Vector2[] extentPoints = new Vector2[8]
-                //{
-                //    HandleUtility.WorldToGUIPoint(new Vector3(cen.x-ext.x, cen.y-ext.y, cen.z-ext.z)),
-                //    HandleUtility.WorldToGUIPoint(new Vector3(cen.x+ext.x, cen.y-ext.y, cen.z-ext.z)),
-                //    HandleUtility.WorldToGUIPoint(new Vector3(cen.x-ext.x, cen.y-ext.y, cen.z+ext.z)),
-                //    HandleUtility.WorldToGUIPoint(new Vector3(cen.x+ext.x, cen.y-ext.y, cen.z+ext.z)),
-                //    HandleUtility.WorldToGUIPoint(new Vector3(cen.x-ext.x, cen.y+ext.y, cen.z-ext.z)),
-                //    HandleUtility.WorldToGUIPoint(new Vector3(cen.x+ext.x, cen.y+ext.y, cen.z-ext.z)),
-                //    HandleUtility.WorldToGUIPoint(new Vector3(cen.x-ext.x, cen.y+ext.y, cen.z+ext.z)),
-                //    HandleUtility.WorldToGUIPoint(new Vector3(cen.x+ext.x, cen.y+ext.y, cen.z+ext.z))
-                //};
-                //Vector2 min = extentPoints[0];
-                //Vector2 max = extentPoints[0];
-                //foreach (Vector2 v in extentPoints)
-                //{
-                //    min = Vector2.Min(min, v);
-                //    max = Vector2.Max(max, v);
-                //}
-
-                //topList.Add((int)max.y);
-                //bottomList.Add((int)(min).y);
-                //rightList.Add((int)(max).x);
-                //leftList.Add((int)(min).x);
-//>>>>>>> Stashed changes
             }
 
-            //update position value
-            topPos = Mathf.Max(topList.ToArray());
-            bottomPos = Mathf.Min(bottomList.ToArray());
-            rightPos = Mathf.Max(rightList.ToArray());
-            leftPos = Mathf.Min(leftList.ToArray());
-            float temph = (Screen.height - topPos);
-            float tempw = (Screen.height - bottomPos);
+            //get max y, min y, max x and min x in list
+            max_y = Mathf.Max(ys_max.ToArray());
+            min_y = Mathf.Min(ys_min.ToArray());
+            max_x = Mathf.Max(xs_max.ToArray());
+            min_x = Mathf.Min(xs_min.ToArray());
 
-            //float tempr = (Screen.width - rightPos);
-            //float templ = (Screen.width - leftPos);
+            //sin 0 y position in unity is at the bottom, convert it to y in pixel
+            float temph = (Screen.height - max_y);
+            float tempw = (Screen.height - min_y);
 
-
-            float rl = Mathf.Max(rightPos, leftPos);
-            float lf = Mathf.Min(leftPos, rightPos);
-            float hi = Mathf.Min(temph, tempw);
-            float bo = Mathf.Max(tempw, temph);
+            //get coordinate for each bounding box edge
+            float right = Mathf.Max(max_x, min_x);
+            float left = Mathf.Min(min_x, max_x);
+            float top = Mathf.Min(temph, tempw);
+            float bottom = Mathf.Max(tempw, temph);
 
             //Post it in dataset
             if ((new Rect(0, 0, Screen.width, Screen.height)).Contains(screenPoint) && screenPoint.x > 0 && screenPoint.y > 0 && screenPoint.z > 0){
 
-                if (hi > 0 && lf > 0 && rl > 0 && bo > 0 &&
-                    hi >= 0 && bo <= Screen.height && lf >= 0 && rl <= Screen.width &&
-                    (rl-lf > 100 || bo - hi > 100)
+                if (top > 0 && left > 0 && right > 0 && bottom > 0 &&
+                    top >= 0 && bottom <= Screen.height && left >= 0 && right <= Screen.width &&
+                    (right-left > 100 || bottom - top > 100)
                     )
                 {
                     List<Vector2> bv = new List<Vector2>();
-                    bv.Add(new Vector2(lf + (rl - lf) / 2, Screen.height - hi + (bo - hi) / 2));
-                    bv.Add(new Vector2(rl - (rl - lf) / 4, Screen.height - bo - (bo - hi) / 4));
-                    bv.Add(new Vector2(lf + (rl - lf) / 4, Screen.height - hi + (bo - hi) / 4));
+                    bv.Add(new Vector2(left + (right - left) / 2, Screen.height - top + (bottom - top) / 2));
+                    bv.Add(new Vector2(right - (right - left) / 4, Screen.height - bottom - (bottom - top) / 4));
+                    bv.Add(new Vector2(left + (right - left) / 4, Screen.height - top + (bottom - top) / 4));
 
                     foreach (Vector2 v in bv)
                     {
+                        //hide objek yang menghalangi kamera dari objek botol
                         RaycastHit hit;
                         Ray ray = GetComponent<Camera>().ScreenPointToRay(v);
 
@@ -224,7 +171,7 @@ public class Screenshot : MonoBehaviour
                         }
                     }
 
-                    posText.Add(lf + ";" + hi + ";" + rl + ";" + bo);
+                    posText.Add(left + ";" + top + ";" + right + ";" + bottom);
                 }
             }
             

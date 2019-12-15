@@ -15,6 +15,7 @@ public class PlaneTexture : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //code random posisi texture
         Renderer rend = GetComponent<Renderer>();
         rend.material.SetTexture("_MainTex",texture[Random.Range(0, texture.Count)]);
     }

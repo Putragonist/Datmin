@@ -56,13 +56,16 @@ public class GameObjectList : MonoBehaviour
         }
         spawnGameObject.Clear();
 
+        //code spawn botol
         for (int i = 0; i < Random.Range(randomCountMin, randomCountMax); i++)
         {
             int oval = Random.Range(0, 2);
-            GameObject go = go = Instantiate(bottleTypes1[Random.Range(0, bottleTypes1.Count)]);
 
-
-            float posX = Random.Range(-radiusMax / 2, radiusMax / 2);
+            //spawn botol
+            GameObject go  = Instantiate(bottleTypes1[Random.Range(0, bottleTypes1.Count)]); 
+            
+            //set posisi botol sesuai radius 
+            float posX = Random.Range(-radiusMax / 2, radiusMax / 2); 
             float posY = Random.Range(5 , 10);
             float posZ = Random.Range(-radiusMax / 2, radiusMax / 2);
             go.transform.position = new Vector3(posX, posY, posZ);

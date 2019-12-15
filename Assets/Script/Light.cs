@@ -16,6 +16,7 @@ public class Light : MonoBehaviour
     void Update()
     {
         //transform.Rotate(new Vector3(Random.Range(0, 1), Random.Range(0, 1), Random.Range(0, 1)), Random.Range(0, 360));
+        //code random posisi cahaya
         transform.localEulerAngles = new Vector3(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360));
     }
 }

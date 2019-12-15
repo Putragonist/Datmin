@@ -63,6 +63,7 @@ public class CameraSetting : MonoBehaviour
 
     public void OnCollisionEnter(Collision collision)
     {
+        //hide objek yang bersentuhan dengan kamera
         collision.transform.gameObject.SetActive(false);
     }
 }
