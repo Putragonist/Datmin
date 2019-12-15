@@ -8,6 +8,9 @@ In this project we generate bounding box for object bottle, and the anotation wi
 Software: UNITY 2019.2.10f1
 
 Who Contributed for this project:
+
 Ihsan (Putragonist)
+
 Yoni 
+
 Evan
